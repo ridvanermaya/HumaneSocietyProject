@@ -224,7 +224,8 @@ namespace HumaneSociety
 
         public static Animals CreateAnAnimal()
         {
-            
+            Animals newAnimal = new Animals();
+            return newAnimal;
         }
     }
 }

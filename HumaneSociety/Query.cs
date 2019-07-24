@@ -191,7 +191,8 @@ namespace HumaneSociety
             db.SaveChanges();
         }
 
-        internal static Animals CreateAnAnimal(string name, int weight, int age, string demeanor, bool kidFriendly, bool petFriendly, string gender, string adoptionStatus, int categoryId, int dietPlanId, int employeeId)
+        // Creates an animal
+        internal static Animals CreateAnAnimal(string name, int weight, int age, string demeanor, bool? kidFriendly, bool? petFriendly, string gender, string adoptionStatus, int categoryId, int dietPlanId, int employeeId)
         {
             Animals newAnimal = new Animals();
 
@@ -211,7 +212,8 @@ namespace HumaneSociety
 
         internal static Animals GetAnimalByID(int id)
         {
-            throw new NotImplementedException();
+            Animals foundAnimal = db.Animals.Where(i => i.AnimalId == id).FirstOrDefault();
+            return foundAnimal;
         }
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
