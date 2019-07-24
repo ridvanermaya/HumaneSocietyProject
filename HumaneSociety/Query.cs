@@ -267,7 +267,41 @@ namespace HumaneSociety
 
         internal static void RemoveAnimal(Animals animal)
         {
-            throw new NotImplementedException();
+            var queryR = db.Rooms.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
+            var queryS = db.AnimalShots.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
+            try
+            {
+                db.AnimalShots.Remove(queryS);
+            }
+            catch (System.Exception)
+            {
+
+            }
+            db.SaveChanges();
+            try
+            {
+                queryR.AnimalId = null;
+            }
+            catch (System.Exception)
+            {
+
+            }
+            db.SaveChanges();
+
+            var query = db.Animals.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
+
+            if (query != null)
+            {
+                db.Animals.Remove(query);
+            }
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
         
         // TODO: Animal Multi-Trait Search
