@@ -174,6 +174,7 @@ namespace HumaneSociety
         internal static void AddAnimal(Animals animal)
         {
             Animals newAnimal = new Animals();
+
             newAnimal.Name = animal.Name;
             newAnimal.Weight = animal.Weight;
             newAnimal.Age = animal.Age;
@@ -188,6 +189,24 @@ namespace HumaneSociety
 
             db.Add(newAnimal);
             db.SaveChanges();
+        }
+
+        internal static Animals CreateAnAnimal(string name, int weight, int age, string demeanor, bool kidFriendly, bool petFriendly, string gender, string adoptionStatus, int categoryId, int dietPlanId, int employeeId)
+        {
+            Animals newAnimal = new Animals();
+
+            newAnimal.Name = name;
+            newAnimal.Weight = weight;
+            newAnimal.Age = age;
+            newAnimal.Demeanor = demeanor;
+            newAnimal.KidFriendly = kidFriendly;
+            newAnimal.PetFriendly = petFriendly;
+            newAnimal.Gender = gender;
+            newAnimal.AdoptionStatus = adoptionStatus;
+            newAnimal.DietPlanId = dietPlanId;
+            newAnimal.EmployeeId = employeeId;
+
+            return newAnimal;
         }
 
         internal static Animals GetAnimalByID(int id)

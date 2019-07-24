@@ -221,5 +221,10 @@ namespace HumaneSociety
             }
             return searchParameters;
         }
+
+        public static Animals CreateAnAnimal()
+        {
+            
+        }
     }
 }
