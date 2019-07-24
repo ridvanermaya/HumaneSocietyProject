@@ -13,7 +13,6 @@ namespace HumaneSociety
         {
             PointOfEntry.Run();
             var db = new HumaneSocietyDb();
-            
         }
     }
 }
