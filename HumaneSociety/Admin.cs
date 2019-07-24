@@ -62,7 +62,7 @@ namespace HumaneSociety
 
         private void UpdateEmployee()
         {
-            Employee employee = new Employee();
+            Employees employee = new Employees();
             employee.FirstName = UserInterface.GetStringData("first name", "the employee's");
             employee.LastName = UserInterface.GetStringData("last name", "the employee's");
             employee.EmployeeNumber = int.Parse(UserInterface.GetStringData("employee number", "the employee's"));
@@ -84,7 +84,7 @@ namespace HumaneSociety
         {
             try
             {
-                Employee employee = new Employee();
+                Employees employee = new Employees();
                 employee.EmployeeNumber = int.Parse(UserInterface.GetStringData("employee number", "the employee's"));
                 Query.RunEmployeeQueries(employee, "read");
             }
@@ -98,7 +98,7 @@ namespace HumaneSociety
 
         private void RemoveEmployee()
         {
-            Employee employee = new Employee();
+            Employees employee = new Employees();
             employee.LastName = UserInterface.GetStringData("last name", "the employee's"); ;
             employee.EmployeeNumber = int.Parse(UserInterface.GetStringData("employee number", "the employee's"));
             try
@@ -117,7 +117,7 @@ namespace HumaneSociety
 
         private void AddEmployee()
         {
-            Employee employee = new Employee();
+            Employees employee = new Employees();
             employee.FirstName = UserInterface.GetStringData("first name", "the employee's");
             employee.LastName = UserInterface.GetStringData("last name", "the employee's");
             employee.EmployeeNumber = int.Parse(UserInterface.GetStringData("employee number", "the employee's"));

@@ -85,9 +85,9 @@ namespace HumaneSociety
             }
         }
 
-        internal static void DisplayAnimals(List<Animal> animals)
+        internal static void DisplayAnimals(List<Animals> animals)
         {
-            foreach(Animal animal in animals)
+            foreach(Animals animal in animals)
             {
                 Console.WriteLine(animal.AnimalId + " " + animal.Name + " " + animal.Category.Name);
             }
@@ -123,16 +123,16 @@ namespace HumaneSociety
             }
         }
 
-        internal static void DisplayClientInfo(Client client)
+        internal static void DisplayClientInfo(Clients client)
         {
-            List<string> info = new List<string>() { client.FirstName, client.LastName, client.Email, client.Address.USState.Name };
+            List<string> info = new List<string>() { client.FirstName, client.LastName, client.Email, client.Address.Usstate.Name };
             DisplayUserOptions(info);
             Console.ReadLine();
         }
 
-        public static void DisplayAnimalInfo(Animal animal)
+        public static void DisplayAnimalInfo(Animals animal)
         {
-            Room animalRoom = Query.GetRoom(animal.AnimalId);
+            Rooms animalRoom = Query.GetRoom(animal.AnimalId);
             List<string> info = new List<string>() {"ID: " + animal.AnimalId, animal.Name, animal.Age + "years old", "Demeanour: " + animal.Demeanor, "Kid friendly: " + BoolToYesNo(animal.KidFriendly), "pet friendly: " + BoolToYesNo(animal.PetFriendly), $"Location: " + animalRoom.RoomId, "Weight: " + animal.Weight.ToString(),  "Food amoumnt in cups:" + animal.DietPlan.FoodAmountInCups};
             DisplayUserOptions(info);
             Console.ReadLine();

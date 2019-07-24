@@ -173,7 +173,21 @@ namespace HumaneSociety
         // TODO: Animal CRUD Operations
         internal static void AddAnimal(Animals animal)
         {
-            throw new NotImplementedException();
+            Animals newAnimal = new Animals();
+            newAnimal.Name = animal.Name;
+            newAnimal.Weight = animal.Weight;
+            newAnimal.Age = animal.Age;
+            newAnimal.Demeanor = animal.Demeanor;
+            newAnimal.KidFriendly = animal.KidFriendly;
+            newAnimal.PetFriendly = animal.PetFriendly;
+            newAnimal.Gender = animal.Gender;
+            newAnimal.AdoptionStatus = animal.AdoptionStatus;
+            newAnimal.CategoryId = animal.CategoryId;
+            newAnimal.DietPlanId = animal.DietPlanId;
+            newAnimal.EmployeeId = animal.EmployeeId;
+
+            db.Add(newAnimal);
+            db.SaveChanges();
         }
 
         internal static Animals GetAnimalByID(int id)
