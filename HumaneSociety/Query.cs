@@ -218,7 +218,11 @@ namespace HumaneSociety
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
         {            
-            throw new NotImplementedException();
+            var query = from animal in db.Animals
+                        where animal.AnimalId == animalId
+                        select animal;
+            
+            
         }
 
         internal static void RemoveAnimal(Animals animal)
@@ -228,24 +232,82 @@ namespace HumaneSociety
         
         // TODO: Animal Multi-Trait Search
         internal static IQueryable<Animals> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
-        {
-            throw new NotImplementedException();
-        }
+       {
+           Dictionary<int, string> search = new Dictionary<int, string>();
+           string category = updates[1];
+           string name = updates[2];
+           //get Whole db of Animals
+           IQueryable<Animals> foundAnimals = db.Animals;
+           int? age;
+           try {
+               age = Int32.Parse(updates[3]);
+           } catch (Exception E)
+           {
+               age = null;
+           }
+           string demeanor = updates[4];
+           int? weight; 
+           try
+           {
+               weight = Int32.Parse(updates[7]);
+           }
+           catch (System.Exception)
+           {
+               weight =  null;
+           }
+           
+           int? ID;
+           try
+           {
+               ID = Int32.Parse(updates[8]);
+           } catch (Exception E)
+           {
+               ID = null;
+           }
+           if (!string.IsNullOrEmpty(category))
+           {
+               //get All the animals of tnis category
+               foundAnimals = foundAnimals.Where((x) => x.Category.Name == category);
+           }
+           if (!string.IsNullOrEmpty(name))
+           {
+               foundAnimals = foundAnimals.Where((x) => x.Name == name);
+           }
+           if (age != null)
+           {
+           }
+           if (!string.IsNullOrEmpty(demeanor))
+           {
+           }
+           if (ID != null)
+           {
+               return (IQueryable<Animals>) GetAnimalByID((int)ID);
+           }
+        //    if (foundAnimals == null)
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+           return foundAnimals;
+       }
+
          
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
-            throw new NotImplementedException();
+            var foundCategoryId = db.Categories.Where(c => c.Name == categoryName).Select(x => x.CategoryId).FirstOrDefault();
+            return foundCategoryId;
         }
         
         internal static Rooms GetRoom(int animalId)
         {
-            throw new NotImplementedException();
+            var foundRoom = db.Rooms.Where(r => r.AnimalId == animalId).FirstOrDefault();
+            return foundRoom;
         }
         
         internal static int GetDietPlanId(string dietPlanName)
         {
-            throw new NotImplementedException();
+            var foundPlanId = db.DietPlans.Where(d => d.Name == dietPlanName).Select(x => x.DietPlanId).FirstOrDefault();
+            return foundPlanId;
         }
 
         // TODO: Adoption CRUD Operations
