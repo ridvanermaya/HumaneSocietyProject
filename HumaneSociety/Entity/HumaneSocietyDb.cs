@@ -25,7 +25,7 @@ namespace HumaneSociety.Entity
         public virtual DbSet<Employees> Employees { get; set; }
         public virtual DbSet<Rooms> Rooms { get; set; }
         public virtual DbSet<Shots> Shots { get; set; }
-        public virtual DbSet<Usstates> Usstates { get; set; }
+        public virtual DbSet<USStates> Usstates { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

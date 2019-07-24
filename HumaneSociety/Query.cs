@@ -9,37 +9,37 @@ namespace HumaneSociety
 {
     public static class Query
     {        
-        static HumaneSocietyDataContext db;
+        static HumaneSocietyDb db;
 
         static Query()
         {
-            db = new HumaneSocietyDataContext();
+            db = new HumaneSocietyDb();
         }
 
-        internal static List<USState> GetStates()
+        internal static List<USStates> GetStates()
         {
-            List<USState> allStates = db.USStates.ToList();       
+            List<USStates> allStates = db.Usstates.ToList();       
 
             return allStates;
         }
             
-        internal static Client GetClient(string userName, string password)
+        internal static Clients GetClient(string userName, string password)
         {
-            Client client = db.Clients.Where(c => c.UserName == userName && c.Password == password).Single();
+            Clients client = db.Clients.Where(c => c.UserName == userName && c.Password == password).Single();
 
             return client;
         }
 
-        internal static List<Client> GetClients()
+        internal static List<Clients> GetClients()
         {
-            List<Client> allClients = db.Clients.ToList();
+            List<Clients> allClients = db.Clients.ToList();
 
             return allClients;
         }
 
         internal static void AddNewClient(string firstName, string lastName, string username, string password, string email, string streetAddress, int zipCode, int stateId)
         {
-            Client newClient = new Client();
+            Clients newClient = new Clients();
 
             newClient.FirstName = firstName;
             newClient.LastName = lastName;
@@ -47,19 +47,19 @@ namespace HumaneSociety
             newClient.Password = password;
             newClient.Email = email;
 
-            Address addressFromDb = db.Addresses.Where(a => a.AddressLine1 == streetAddress && a.Zipcode == zipCode && a.USStateId == stateId).FirstOrDefault();
+            Addresses addressFromDb = db.Addresses.Where(a => a.AddressLine1 == streetAddress && a.Zipcode == zipCode && a.UsstateId == stateId).FirstOrDefault();
 
             // if the address isn't found in the Db, create and insert it
             if (addressFromDb == null)
             {
-                Address newAddress = new Address();
+                Addresses newAddress = new Addresses();
                 newAddress.AddressLine1 = streetAddress;
                 newAddress.City = null;
-                newAddress.USStateId = stateId;
+                newAddress.UsstateId = stateId;
                 newAddress.Zipcode = zipCode;                
 
-                db.Addresses.InsertOnSubmit(newAddress);
-                db.SubmitChanges();
+                db.Addresses.Add(newAddress);
+                db.SaveChanges();
 
                 addressFromDb = newAddress;
             }
@@ -67,15 +67,15 @@ namespace HumaneSociety
             // attach AddressId to clientFromDb.AddressId
             newClient.AddressId = addressFromDb.AddressId;
 
-            db.Clients.InsertOnSubmit(newClient);
+            db.Clients.Add(newClient);
 
-            db.SubmitChanges();
+            db.SaveChanges();
         }
 
-        internal static void UpdateClient(Client clientWithUpdates)
+        internal static void UpdateClient(Clients clientWithUpdates)
         {
             // find corresponding Client from Db
-            Client clientFromDb = null;
+            Clients clientFromDb = null;
 
             try
             {
@@ -96,22 +96,22 @@ namespace HumaneSociety
             clientFromDb.Email = clientWithUpdates.Email;
 
             // get address object from clientWithUpdates
-            Address clientAddress = clientWithUpdates.Address;
+            Addresses clientAddress = clientWithUpdates.Address;
 
             // look for existing Address in Db (null will be returned if the address isn't already in the Db
-            Address updatedAddress = db.Addresses.Where(a => a.AddressLine1 == clientAddress.AddressLine1 && a.USStateId == clientAddress.USStateId && a.Zipcode == clientAddress.Zipcode).FirstOrDefault();
+            Addresses updatedAddress = db.Addresses.Where(a => a.AddressLine1 == clientAddress.AddressLine1 && a.UsstateId == clientAddress.UsstateId && a.Zipcode == clientAddress.Zipcode).FirstOrDefault();
 
             // if the address isn't found in the Db, create and insert it
             if(updatedAddress == null)
             {
-                Address newAddress = new Address();
+                Addresses newAddress = new Addresses();
                 newAddress.AddressLine1 = clientAddress.AddressLine1;
                 newAddress.City = null;
-                newAddress.USStateId = clientAddress.USStateId;
+                newAddress.UsstateId = clientAddress.UsstateId;
                 newAddress.Zipcode = clientAddress.Zipcode;                
 
-                db.Addresses.InsertOnSubmit(newAddress);
-                db.SubmitChanges();
+                db.Addresses.Add(newAddress);
+                db.SaveChanges();
 
                 updatedAddress = newAddress;
             }
@@ -120,22 +120,22 @@ namespace HumaneSociety
             clientFromDb.AddressId = updatedAddress.AddressId;
             
             // submit changes
-            db.SubmitChanges();
+            db.SaveChanges();
         }
         
-        internal static void AddUsernameAndPassword(Employee employee)
+        internal static void AddUsernameAndPassword(Employees employee)
         {
-            Employee employeeFromDb = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId).FirstOrDefault();
+            Employees employeeFromDb = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId).FirstOrDefault();
 
             employeeFromDb.UserName = employee.UserName;
             employeeFromDb.Password = employee.Password;
 
-            db.SubmitChanges();
+            db.SaveChanges();
         }
 
-        internal static Employee RetrieveEmployeeUser(string email, int employeeNumber)
+        internal static Employees RetrieveEmployeeUser(string email, int employeeNumber)
         {
-            Employee employeeFromDb = db.Employees.Where(e => e.Email == email && e.EmployeeNumber == employeeNumber).FirstOrDefault();
+            Employees employeeFromDb = db.Employees.Where(e => e.Email == email && e.EmployeeNumber == employeeNumber).FirstOrDefault();
 
             if (employeeFromDb == null)
             {
@@ -147,16 +147,16 @@ namespace HumaneSociety
             }
         }
 
-        internal static Employee EmployeeLogin(string userName, string password)
+        internal static Employees EmployeeLogin(string userName, string password)
         {
-            Employee employeeFromDb = db.Employees.Where(e => e.UserName == userName && e.Password == password).FirstOrDefault();
+            Employees employeeFromDb = db.Employees.Where(e => e.UserName == userName && e.Password == password).FirstOrDefault();
 
             return employeeFromDb;
         }
 
         internal static bool CheckEmployeeUserNameExist(string userName)
         {
-            Employee employeeWithUserName = db.Employees.Where(e => e.UserName == userName).FirstOrDefault();
+            Employees employeeWithUserName = db.Employees.Where(e => e.UserName == userName).FirstOrDefault();
 
             return employeeWithUserName == null;
         }
@@ -165,18 +165,18 @@ namespace HumaneSociety
         //// TODO Items: ////
         
         // TODO: Allow any of the CRUD operations to occur here
-        internal static void RunEmployeeQueries(Employee employee, string crudOperation)
+        internal static void RunEmployeeQueries(Employees employee, string crudOperation)
         {
             throw new NotImplementedException();
         }
 
         // TODO: Animal CRUD Operations
-        internal static void AddAnimal(Animal animal)
+        internal static void AddAnimal(Animals animal)
         {
             throw new NotImplementedException();
         }
 
-        internal static Animal GetAnimalByID(int id)
+        internal static Animals GetAnimalByID(int id)
         {
             throw new NotImplementedException();
         }
@@ -186,13 +186,13 @@ namespace HumaneSociety
             throw new NotImplementedException();
         }
 
-        internal static void RemoveAnimal(Animal animal)
+        internal static void RemoveAnimal(Animals animal)
         {
             throw new NotImplementedException();
         }
         
         // TODO: Animal Multi-Trait Search
-        internal static IQueryable<Animal> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
+        internal static IQueryable<Animals> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
         {
             throw new NotImplementedException();
         }
@@ -203,7 +203,7 @@ namespace HumaneSociety
             throw new NotImplementedException();
         }
         
-        internal static Room GetRoom(int animalId)
+        internal static Rooms GetRoom(int animalId)
         {
             throw new NotImplementedException();
         }
@@ -214,17 +214,17 @@ namespace HumaneSociety
         }
 
         // TODO: Adoption CRUD Operations
-        internal static void Adopt(Animal animal, Client client)
+        internal static void Adopt(Animals animal, Clients client)
         {
             throw new NotImplementedException();
         }
 
-        internal static IQueryable<Adoption> GetPendingAdoptions()
+        internal static IQueryable<Adoptions> GetPendingAdoptions()
         {
             throw new NotImplementedException();
         }
 
-        internal static void UpdateAdoption(bool isAdopted, Adoption adoption)
+        internal static void UpdateAdoption(bool isAdopted, Adoptions adoption)
         {
             throw new NotImplementedException();
         }
@@ -235,12 +235,12 @@ namespace HumaneSociety
         }
 
         // TODO: Shots Stuff
-        internal static IQueryable<AnimalShot> GetShots(Animal animal)
+        internal static IQueryable<AnimalShots> GetShots(Animals animal)
         {
             throw new NotImplementedException();
         }
 
-        internal static void UpdateShot(string shotName, Animal animal)
+        internal static void UpdateShot(string shotName, Animals animal)
         {
             throw new NotImplementedException();
         }

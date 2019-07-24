@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace HumaneSociety.Entity
 {
-    public partial class Usstates
+    public partial class USStates
     {
-        public Usstates()
+        public USStates()
         {
             Addresses = new HashSet<Addresses>();
         }

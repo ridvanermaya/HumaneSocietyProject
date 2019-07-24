@@ -14,18 +14,30 @@
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\Vincent\\Documents\\SCHOOL\\databases\\HumaneSocietyProject\\HumaneSociety\\HumaneSociety.csproj",
       "projectName": "HumaneSociety",
       "projectPath": "C:\\Users\\Vincent\\Documents\\SCHOOL\\databases\\HumaneSocietyProject\\HumaneSociety\\HumaneSociety.csproj",
       "packagesPath": "C:\\Users\\Vincent\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Vincent\\Documents\\SCHOOL\\databases\\HumaneSocietyProject\\HumaneSociety\\obj\\",
+=======
+      "projectUniqueName": "/Users/redone/git/DevCodeCamp/Week_07/Projects/HumaneSocietyProject/HumaneSociety/HumaneSociety.csproj",
+      "projectName": "HumaneSociety",
+      "projectPath": "/Users/redone/git/DevCodeCamp/Week_07/Projects/HumaneSocietyProject/HumaneSociety/HumaneSociety.csproj",
+      "packagesPath": "/Users/redone/.nuget/packages/",
+      "outputPath": "/Users/redone/git/DevCodeCamp/Week_07/Projects/HumaneSocietyProject/HumaneSociety/obj/",
+>>>>>>> c3467fa82512382cd9bce1fddb27b68dc33e4a5b
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
+<<<<<<< HEAD
         "C:\\Users\\Vincent\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+=======
+        "/Users/redone/.nuget/NuGet/NuGet.Config"
+>>>>>>> c3467fa82512382cd9bce1fddb27b68dc33e4a5b
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.2"

@@ -1,0 +1,112 @@
+---- Inserting Categories ----
+
+INSERT INTO Categories (Name)
+VALUES ('Cat'), ('Dog'), ('Bird'), ('Fish'), ('Monkey');
+
+---- Inserting Addresses ----
+
+INSERT INTO Addresses(AddressLine1, City, USStateId, Zipcode)
+VALUES ('9737 N. Thompson Drive', 'Levittown', 32, 11756),
+('7918 Pacific St.', 'Piqua', 35, 45356),
+('34 Westport St.', 'Lawndale', 5, 90260),
+('513 Honey Creek Ave', 'Loveland', 35, 45140),
+('715 Manhattan St.', 'Liverpool', 32, 13090);
+
+---- Inserting Employeees ----
+
+INSERT INTO Employees(FirstName, LastName, UserName, Password, EmployeeNumber, Email)
+VALUES ('Zachary', 'Rich', 'zrich', 'zr12345', 001, 'zacharyrich@gmail.com'),
+('Sophie', 'Chaney', 'schaney', 'sc12345', 002, 'sophiechaney@gmail.com'),
+('Lillian', 'Mcbride', 'lmcbride', 'lm12345', 003, 'lillianmcbride@gmail.com'),
+('Franco', 'Travis', 'ftravis', 'ft12345', 004, 'francotravis@gmail.com'),
+('Kadence', 'Browning', 'kbrowning', 'kb12345', 005, 'kadencebrowning@gmail.com');
+
+---- Inserting DietPlans ----
+
+INSERT INTO DietPlans (Name, FoodType, FoodAmountInCups)
+VALUES (Meat Based', 'Meat', 6),
+('Veggie Based', 'Veggie', 12),
+('Seafood', 'Fish', 8),
+('Mixed', 'Meat, Veggie, and Fish', 8),
+('Bug Based', 'Worms', 14);
+
+---- Inserting Animals ----
+
+INSERT INTO Animals (Name, Weight, Age, Demeanor, KidFriendly, PetFriendly, Gender, AdoptionStatus, CategoryId, DietPlanId, EmployeeId)
+VALUES ('Mikkie', 2, 1, 'curious', 1, 1, 'female', 'Ready for Adoptation', 6, 2, 2),
+('Dragon', 100, 3, 'aggressive', 0, 0, 'male', 'Not for Adoptation', 2, 1, 4),
+('Poison', 60, 2, 'friendly', 1, 1, 'male', 'Ready for Adoptation', 1, 4, 3),
+('Snow', 10, 8, 'shy', 0, 1, 'female', 'Waiting for Adoptation Approval', 3, 5, 1),
+('Khaleesi', 20, 4, 'friendly', 1, 0, 'female', 'Ready for Adoptation', 1, 3, 5);
+
+---- Updating Animals ---- (Typo for Adoptation = Adoption)
+
+UPDATE Animals
+SET AdoptionStatus = 'Ready for Adoption'
+WHERE name = 'Mikkie';
+
+UPDATE Animals
+SET AdoptionStatus = 'Not for Adoption'
+WHERE name = 'Dragon';
+
+UPDATE Animals
+SET AdoptionStatus = 'Ready for Adoption'
+WHERE name = 'Posion';
+
+UPDATE Animals
+SET AdoptionStatus = 'Waiting for Adoption Approval'
+WHERE name = 'Snow';
+
+UPDATE Animals
+SET AdoptionStatus = 'Ready for Adoption'
+WHERE name = 'Khaleesi';
+
+---- Inserting Rooms ----
+
+INSERT INTO Rooms (RoomNumber, AnimalId)
+VALUES (100, 4),
+(101, 2),
+(102, 1),
+(103, 5),
+(104, 3),
+(105, null),
+(106, null),
+(107, null),
+(108, null),
+(109, null);
+
+---- Inserting Clients ----
+
+INSERT INTO Clients (FirstName, LastName, UserName, Password, AddressId, Email)
+VALUES ('Jadyn', 'Torres', 'jtorres', 'jt12345', 1, 'jadyntorres@gmail.com'),
+('Wade', 'Dawson', 'wdawson', 'wd12345', 2, 'wadedawson@gmail.com'),
+('Simeon', 'Serrano', 'sserrano', 'ss12345', 3, 'simeonserrano@gmail.com'),
+('Gaven', 'David', 'gdavid', 'gd12345', 4, 'gavindavid@gmail.com'),
+('Issac', 'Macdonald', 'imacdonald', 'im12345', 5, 'issacmacdonald@gmail.com');
+
+---- Inserting Adoptions ----
+
+INSERT INTO Adoptions(ClientId, AnimalId, ApprovalStatus, AdoptionFee, PaymentCollected)
+VALUES (3, 5, 'Approved', 50, 0),
+(1, 2, 'Denied', 25, 0),
+(2, 4, 'In Progress', 100, 1),
+(4, 1, 'Approved', 75, 1),
+(5, 3, 'Denied', 150, 0);
+
+---- Inserting Shots ----
+
+INSERT INTO Shots (Name)
+VALUES ('DA2P'),
+('Bordetella'),
+('Rabies'),
+('Leptospirosis'),
+('Lyme');
+
+---- Inserting AnimalShots ----
+
+INSERT INTO AnimalShots(AnimalId, ShotId, DateReceived)
+VALUES (1, 3, '01/01/2019'),
+(1, 5, '01/05/2019'),
+(4, 1, '03/05/2018'),
+(3, 4, '03/05/2019'),
+(2, 2, '01/05/2019');
