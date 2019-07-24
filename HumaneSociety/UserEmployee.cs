@@ -9,7 +9,7 @@ namespace HumaneSociety
 {
     class UserEmployee : User
     {
-        Employee employee;
+        Employees employee;
         
         public override void LogIn()
         {
@@ -67,7 +67,7 @@ namespace HumaneSociety
             var adoptions = Query.GetPendingAdoptions().ToList();
             if(adoptions.Count > 0)
             {
-                foreach(Adoption adoption in adoptions)
+                foreach(Adoptions adoption in adoptions)
                 {
                     adoptionInfo.Add($"{counter}. {adoption.Client.FirstName} {adoption.Client.LastName}, {adoption.Animal.Name} {adoption.Animal.Category}");
                     counter++;
@@ -80,7 +80,7 @@ namespace HumaneSociety
 
         }
 
-        private void ApproveAdoption(Adoption adoption)
+        private void ApproveAdoption(Adoptions adoption)
         {
             UserInterface.DisplayAnimalInfo(adoption.Animal);
             UserInterface.DisplayClientInfo(adoption.Client);
@@ -118,7 +118,7 @@ namespace HumaneSociety
             RunCheckMenu(animals[0]);
         }
 
-        private void RunCheckMenu(Animal animal)
+        private void RunCheckMenu(Animals animal)
         {
             bool isFinished = false;
             Console.Clear();
@@ -135,7 +135,7 @@ namespace HumaneSociety
             }
         }
 
-        private void RunCheckMenuInput(int input, Animal animal)
+        private void RunCheckMenuInput(int input, Animals animal)
         {
             
             switch (input)
@@ -158,11 +158,11 @@ namespace HumaneSociety
             }
         }
 
-        private void CheckShots(Animal animal)
+        private void CheckShots(Animals animal)
         {
             List<string> shotInfo = new List<string>();
             var shots = Query.GetShots(animal);
-            foreach(AnimalShot shot in shots.ToList())
+            foreach(AnimalShots shot in shots.ToList())
             {
                 shotInfo.Add($"{shot.Shot.Name} Date: {shot.DateReceived}");
             }
@@ -178,7 +178,7 @@ namespace HumaneSociety
             }
         }
 
-        public void UpdateAnimal(Animal animal, Dictionary<int, string> updates = null)
+        public void UpdateAnimal(Animals animal, Dictionary<int, string> updates = null)
         {
             if(updates == null)
             {
@@ -211,9 +211,9 @@ namespace HumaneSociety
             RunCheckMenu(animals[0]);
         }
 
-        private IQueryable<Animal> SearchForAnimal(int iD)
+        private IQueryable<Animals> SearchForAnimal(int iD)
         {
-            HumaneSocietyDataContext context = new HumaneSocietyDataContext();
+            HumaneSocietyDb context = new HumaneSocietyDb();
             var animals = (from animal in context.Animals where animal.AnimalId == iD select animal);
             return animals;
         }       
@@ -250,7 +250,7 @@ namespace HumaneSociety
             string animalCategoryName = UserInterface.GetStringData("category/breed", "the name of the animal's");
             string animalDietPlanName = UserInterface.GetStringData("diet plan", "the name of the animal's");
 
-            Animal animal = new Animal();
+            Animals animal = new Animals();
             animal.CategoryId = Query.GetCategoryId(animalCategoryName);
             animal.Name = UserInterface.GetStringData("name", "the animal's");
             animal.Age = UserInterface.GetIntegerData("age", "the animal's");

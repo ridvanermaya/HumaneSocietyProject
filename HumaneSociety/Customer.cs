@@ -9,7 +9,7 @@ namespace HumaneSociety
 {
     class Customer : User
     {
-        Client client;
+        Clients client;
         public override void LogIn()
         {
             if (CheckIfNewUser())
@@ -170,13 +170,13 @@ namespace HumaneSociety
             {
                 try
                 {
-                    var stateReturn = from territory in states where territory.Name.ToLower() == state.ToLower() select territory.USStateId;
+                    var stateReturn = from territory in states where territory.Name.ToLower() == state.ToLower() select territory.UsstateId;
                     int stateNumber = stateReturn.ToList()[0];
                     return stateNumber;
                 }
                 catch
                 {
-                    var stateReturn = from territory in states where territory.Abbreviation == state.ToUpper() select territory.USStateId;
+                    var stateReturn = from territory in states where territory.Abbreviation == state.ToUpper() select territory.UsstateId;
                     int stateNumber = stateReturn.ToList()[0];
                     return stateNumber;
                 }
@@ -217,7 +217,7 @@ namespace HumaneSociety
                 return false;
             }
         }
-        public bool CreateClient(IQueryable<Client> clients)
+        public bool CreateClient(IQueryable<Clients> clients)
         {
             try
             {
@@ -348,11 +348,11 @@ namespace HumaneSociety
                 return GetZipCode();
             }
         }
-        public void DisplayCurrentAddress(Client client)
+        public void DisplayCurrentAddress(Clients client)
         {
             string address = client.Address.AddressLine1;
             string zipCode = client.Address.Zipcode.ToString();
-            string state = client.Address.USState.Name;
+            string state = client.Address.Usstate.Name;
             UserInterface.DisplayUserOptions("Current address:");
             UserInterface.DisplayUserOptions($"{address}, {zipCode}, {state}");
         }
@@ -361,7 +361,7 @@ namespace HumaneSociety
             Console.Clear();
             DisplayCurrentAddress(client);
             client.Address.Zipcode = GetZipCode();
-            client.Address.USStateId = GetState();
+            client.Address.UsstateId = GetState();
             UserInterface.DisplayUserOptions("Please enter your street address");
             client.Address.AddressLine1 = UserInterface.GetUserInput();
             Query.UpdateClient(client);
