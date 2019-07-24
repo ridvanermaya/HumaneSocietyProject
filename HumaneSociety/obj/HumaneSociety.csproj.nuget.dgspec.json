@@ -1,28 +1,30 @@
 {
   "format": 1,
   "restore": {
-    "/Users/redone/git/DevCodeCamp/Week_07/Projects/HumaneSociety/HumaneSociety/HumaneSociety.csproj": {}
+    "C:\\Users\\Vincent\\Documents\\SCHOOL\\databases\\HumaneSocietyProject\\HumaneSociety\\HumaneSociety.csproj": {}
   },
   "projects": {
-    "/Users/redone/git/DevCodeCamp/Week_07/Projects/HumaneSociety/HumaneSociety/HumaneSociety.csproj": {
+    "C:\\Users\\Vincent\\Documents\\SCHOOL\\databases\\HumaneSocietyProject\\HumaneSociety\\HumaneSociety.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/redone/git/DevCodeCamp/Week_07/Projects/HumaneSociety/HumaneSociety/HumaneSociety.csproj",
+        "projectUniqueName": "C:\\Users\\Vincent\\Documents\\SCHOOL\\databases\\HumaneSocietyProject\\HumaneSociety\\HumaneSociety.csproj",
         "projectName": "HumaneSociety",
-        "projectPath": "/Users/redone/git/DevCodeCamp/Week_07/Projects/HumaneSociety/HumaneSociety/HumaneSociety.csproj",
-        "packagesPath": "/Users/redone/.nuget/packages/",
-        "outputPath": "/Users/redone/git/DevCodeCamp/Week_07/Projects/HumaneSociety/HumaneSociety/obj/",
+        "projectPath": "C:\\Users\\Vincent\\Documents\\SCHOOL\\databases\\HumaneSocietyProject\\HumaneSociety\\HumaneSociety.csproj",
+        "packagesPath": "C:\\Users\\Vincent\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Vincent\\Documents\\SCHOOL\\databases\\HumaneSocietyProject\\HumaneSociety\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "/Users/redone/.config/NuGet/NuGet.Config"
+          "C:\\Users\\Vincent\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.2"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -38,22 +40,6 @@
       },
       "frameworks": {
         "netcoreapp2.2": {
-          "dependencies": {
-            "Microsoft.EntityFrameworkCore.Design": {
-              "target": "Package",
-              "version": "[2.2.6, )"
-            },
-            "Microsoft.EntityFrameworkCore.SqlServer": {
-              "target": "Package",
-              "version": "[2.2.6, )"
-            },
-            "Microsoft.NETCore.App": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[2.2.0, )",
-              "autoReferenced": true
-            }
-          },
           "imports": [
             "net461"
           ],
