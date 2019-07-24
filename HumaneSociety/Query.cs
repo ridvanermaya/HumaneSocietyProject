@@ -218,11 +218,51 @@ namespace HumaneSociety
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
         {            
-            var query = from animal in db.Animals
+            var query = (from animal in db.Animals
                         where animal.AnimalId == animalId
-                        select animal;
-            
-            
+                        select animal).FirstOrDefault();
+
+            Console.WriteLine(query);
+            //Console.WriteLine(query.Category.Name);
+
+            Func<string, bool?> stringToBool = (string x) => {
+                if(x=="true"){
+                    return true;
+                } else{
+                    return false;
+                }
+            };
+
+            foreach (var update in updates)
+            {
+                switch(update.Key){
+                    case 1:
+                        query.CategoryId = Int32.Parse(updates[1]);
+                        break;
+                    case 2:
+                        query.Name = updates[2];
+                        break;
+                    case 3:
+                        query.Age = Int32.Parse(updates[3]);
+                        break;
+                    case 4:
+                        query.Demeanor = updates[4];
+                        break;
+                    case 5:
+                        query.KidFriendly = stringToBool(updates[5]);
+                        break;
+                    case 6:
+                        query.PetFriendly = stringToBool(updates[6]);
+                        break;
+                    case 7:
+                        query.Weight = Int32.Parse(updates[7]);
+                        break;
+                    case 8:
+                        query.AnimalId = Int32.Parse(updates[8]);
+                        break;
+                }
+            }
+            db.SaveChanges();
         }
 
         internal static void RemoveAnimal(Animals animal)
@@ -233,7 +273,6 @@ namespace HumaneSociety
         // TODO: Animal Multi-Trait Search
         internal static IQueryable<Animals> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
        {
-           Dictionary<int, string> search = new Dictionary<int, string>();
            string category = updates[1];
            string name = updates[2];
            //get Whole db of Animals
@@ -281,8 +320,9 @@ namespace HumaneSociety
            }
            if (ID != null)
            {
-               return (IQueryable<Animals>) GetAnimalByID((int)ID);
-           }
+               foundAnimals = null;
+               foundAnimals.AsEnumerable().Concat(new[] { GetAnimalByID((int)ID) });
+            }
         //    if (foundAnimals == null)
         //    {
         //        throw new NotImplementedException();

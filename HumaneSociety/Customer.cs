@@ -90,7 +90,7 @@ namespace HumaneSociety
             }
         }
 
-        private void RunSearch()
+        public void RunSearch()
         {
             Console.Clear();
             var updates = UserInterface.GetAnimalSearchCriteria();
