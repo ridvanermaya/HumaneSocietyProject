@@ -16,7 +16,7 @@ namespace HumaneSociety.Entity
         public int? UsstateId { get; set; }
         public int? Zipcode { get; set; }
 
-        public virtual Usstates Usstate { get; set; }
+        public virtual USStates Usstate { get; set; }
         public virtual ICollection<Clients> Clients { get; set; }
     }
 }

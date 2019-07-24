@@ -3583,17 +3583,17 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/redone/git/DevCodeCamp/Week_07/Projects/HumaneSociety/HumaneSociety/HumaneSociety.csproj",
+      "projectUniqueName": "/Users/redone/git/DevCodeCamp/Week_07/Projects/HumaneSocietyProject/HumaneSociety/HumaneSociety.csproj",
       "projectName": "HumaneSociety",
-      "projectPath": "/Users/redone/git/DevCodeCamp/Week_07/Projects/HumaneSociety/HumaneSociety/HumaneSociety.csproj",
+      "projectPath": "/Users/redone/git/DevCodeCamp/Week_07/Projects/HumaneSocietyProject/HumaneSociety/HumaneSociety.csproj",
       "packagesPath": "/Users/redone/.nuget/packages/",
-      "outputPath": "/Users/redone/git/DevCodeCamp/Week_07/Projects/HumaneSociety/HumaneSociety/obj/",
+      "outputPath": "/Users/redone/git/DevCodeCamp/Week_07/Projects/HumaneSocietyProject/HumaneSociety/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "/Users/redone/.config/NuGet/NuGet.Config"
+        "/Users/redone/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.2"
