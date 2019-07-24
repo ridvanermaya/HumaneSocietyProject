@@ -1,0 +1,26 @@
+﻿<Properties StartupConfiguration="{553FF04F-55B4-42C8-B480-7B99C90EECFE}|Default">
+  <MonoDevelop.Ide.ItemProperties.HumaneSociety PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="HumaneSociety/Query.cs">
+    <Files>
+      <File FileName="HumaneSociety/Program.cs" Line="1" Column="1" />
+      <File FileName="HumaneSociety/Query.cs" Line="222" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="HumaneSociety" expanded="True">
+            <Node name="HumaneSociety" expanded="True">
+              <Node name="Query.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
