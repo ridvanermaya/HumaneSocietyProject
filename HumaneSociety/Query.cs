@@ -58,8 +58,8 @@ namespace HumaneSociety
                 newAddress.UsstateId = stateId;
                 newAddress.Zipcode = zipCode;                
 
-                db.Addresses.InsertOnSubmit(newAddress);
-                db.SubmitChanges();
+                db.Addresses.Add(newAddress);
+                db.SaveChanges();
 
                 addressFromDb = newAddress;
             }
@@ -67,9 +67,9 @@ namespace HumaneSociety
             // attach AddressId to clientFromDb.AddressId
             newClient.AddressId = addressFromDb.AddressId;
 
-            db.Clients.InsertOnSubmit(newClient);
+            db.Clients.Add(newClient);
 
-            db.SubmitChanges();
+            db.SaveChanges();
         }
 
         internal static void UpdateClient(Clients clientWithUpdates)
@@ -110,8 +110,8 @@ namespace HumaneSociety
                 newAddress.UsstateId = clientAddress.UsstateId;
                 newAddress.Zipcode = clientAddress.Zipcode;                
 
-                db.Addresses.InsertOnSubmit(newAddress);
-                db.SubmitChanges();
+                db.Addresses.Add(newAddress);
+                db.SaveChanges();
 
                 updatedAddress = newAddress;
             }
@@ -120,7 +120,7 @@ namespace HumaneSociety
             clientFromDb.AddressId = updatedAddress.AddressId;
             
             // submit changes
-            db.SubmitChanges();
+            db.SaveChanges();
         }
         
         internal static void AddUsernameAndPassword(Employees employee)
@@ -130,7 +130,7 @@ namespace HumaneSociety
             employeeFromDb.UserName = employee.UserName;
             employeeFromDb.Password = employee.Password;
 
-            db.SubmitChanges();
+            db.SaveChanges();
         }
 
         internal static Employees RetrieveEmployeeUser(string email, int employeeNumber)
