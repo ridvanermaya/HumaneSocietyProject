@@ -430,7 +430,16 @@ namespace HumaneSociety
 
         internal static void RemoveAdoption(int animalId, int clientId)
         {
-            throw new NotImplementedException();
+            var query = db.Adoptions.Where(x => x.AnimalId == animalId && x.ClientId == clientId).FirstOrDefault();
+            db.Adoptions.Remove(query);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         // TODO: Shots Stuff
