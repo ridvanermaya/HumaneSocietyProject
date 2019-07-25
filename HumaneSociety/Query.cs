@@ -216,6 +216,14 @@ namespace HumaneSociety
             return foundAnimal;
         }
 
+        internal static bool stringToBool(string x){
+                if(x=="true"){
+                    return true;
+                } else{
+                    return false;
+                }
+            }
+
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
         {            
             var query = (from animal in db.Animals
@@ -225,13 +233,7 @@ namespace HumaneSociety
             Console.WriteLine(query);
             //Console.WriteLine(query.Category.Name);
 
-            Func<string, bool?> stringToBool = (string x) => {
-                if(x=="true"){
-                    return true;
-                } else{
-                    return false;
-                }
-            };
+            
 
             foreach (var update in updates)
             {
@@ -416,7 +418,14 @@ namespace HumaneSociety
 
         internal static void UpdateAdoption(bool isAdopted, Adoptions adoption)
         {
-            throw new NotImplementedException();
+            var foundAdoption = db.Adoptions.Where(x => x.AnimalId == adoption.AnimalId && x.ClientId == adoption.ClientId).FirstOrDefault();
+            if(isAdopted){
+                foundAdoption.ApprovalStatus = "Approved/Adopted";
+            } else{
+                foundAdoption.ApprovalStatus = "Denied";
+            }
+
+            db.SaveChanges();
         }
 
         internal static void RemoveAdoption(int animalId, int clientId)

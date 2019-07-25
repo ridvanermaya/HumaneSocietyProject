@@ -15,7 +15,10 @@ namespace HumaneSociety
             animal.AnimalId = 6;
             Clients c = new Clients();
             c.ClientId = 1;
-            Query.Adopt(animal, c);
+            Adoptions a = new Adoptions();
+            a.ClientId = 1;
+            a.AnimalId = 6;
+            Query.UpdateAdoption(true, a);
             
             var db = new HumaneSocietyDb();
             
