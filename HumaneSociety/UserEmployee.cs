@@ -293,7 +293,9 @@ namespace HumaneSociety
             }
             catch
             {
-                UserInterface.DisplayUserOptions("Employee not found please contact your administrator");
+                Employees newEmployee = new Employees();
+                newEmployee.Email = email;
+                Query.RunEmployeeQueries(newEmployee, "create");
                 PointOfEntry.Run();
             }
             if (employee.Password != null)

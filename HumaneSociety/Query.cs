@@ -18,22 +18,19 @@ namespace HumaneSociety
 
         internal static List<USStates> GetStates()
         {
-            List<USStates> allStates = db.Usstates.ToList();       
-
+            List<USStates> allStates = db.Usstates.ToList();
             return allStates;
         }
             
         internal static Clients GetClient(string userName, string password)
         {
             Clients client = db.Clients.Where(c => c.UserName == userName && c.Password == password).Single();
-
             return client;
         }
 
         internal static List<Clients> GetClients()
         {
             List<Clients> allClients = db.Clients.ToList();
-
             return allClients;
         }
 
@@ -63,12 +60,10 @@ namespace HumaneSociety
 
                 addressFromDb = newAddress;
             }
-
             // attach AddressId to clientFromDb.AddressId
             newClient.AddressId = addressFromDb.AddressId;
 
             db.Clients.Add(newClient);
-
             db.SaveChanges();
         }
 
@@ -150,14 +145,12 @@ namespace HumaneSociety
         internal static Employees EmployeeLogin(string userName, string password)
         {
             Employees employeeFromDb = db.Employees.Where(e => e.UserName == userName && e.Password == password).FirstOrDefault();
-
             return employeeFromDb;
         }
 
         internal static bool CheckEmployeeUserNameExist(string userName)
         {
             Employees employeeWithUserName = db.Employees.Where(e => e.UserName == userName).FirstOrDefault();
-
             return employeeWithUserName == null;
         }
 
@@ -171,6 +164,13 @@ namespace HumaneSociety
             switch (crudOperation.ToLower())
             {
                 case "delete" :
+                    var query = db.Animals.Where(x => x.EmployeeId == employee.EmployeeId).Select(x => x);
+                    
+                    foreach (var item in query)
+                    {
+                        item.EmployeeId = null;
+                    }
+
                     db.Employees.Remove(foundEmployee);
                     db.SaveChanges();
                     break;
@@ -182,10 +182,22 @@ namespace HumaneSociety
                     UserInterface.DisplayEmployeeInfo(employee);
                     break;
                 case "update" :
-                    foundEmployee.FirstName = employee.FirstName;
-                    foundEmployee.LastName = employee.LastName;
-                    foundEmployee.Email = employee.Email;
-                    foundEmployee.EmployeeNumber = employee.EmployeeNumber;
+                    if (employee.FirstName != null) {
+                        foundEmployee.FirstName = employee.FirstName;
+                    }
+                    if (employee.LastName != null) {
+                        foundEmployee.LastName = employee.LastName;
+                    }
+                    if (employee.Email != null) {
+                        foundEmployee.Email = employee.Email;
+                    }
+                    if (employee.Password != null) {
+                        foundEmployee.Password = employee.Password;
+                    }
+                    if (employee.EmployeeNumber != null) {
+                        foundEmployee.EmployeeNumber = employee.EmployeeNumber;
+                    }
+
                     db.SaveChanges();
                     break;
             }
@@ -210,9 +222,12 @@ namespace HumaneSociety
 
             db.Add(newAnimal);
             db.SaveChanges();
+
+            Console.Clear();
         }
 
         // Creates an animal
+        // Additional method
         internal static Animals CreateAnAnimal(string name, int weight, int age, string demeanor, bool? kidFriendly, bool? petFriendly, string gender, string adoptionStatus, int categoryId, int dietPlanId, int employeeId)
         {
             Animals newAnimal = new Animals();
@@ -238,12 +253,12 @@ namespace HumaneSociety
         }
 
         internal static bool stringToBool(string x){
-                if(x.ToLower()=="true" || x.ToLower()=="yes"){
-                    return true;
-                } else{
-                    return false;
-                }
+            if(x.ToLower()=="true" || x.ToLower()=="yes"){
+                return true;
+            } else{
+                return false;
             }
+        }
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
         {            
@@ -280,6 +295,7 @@ namespace HumaneSociety
                         break;
                 }
             }
+
             db.SaveChanges();
         }
 
@@ -292,7 +308,6 @@ namespace HumaneSociety
                     queryRoom.AnimalId = null;
                     db.SaveChanges();
                 }
-                
             }
             catch (Exception e)
             {
@@ -306,8 +321,8 @@ namespace HumaneSociety
                 {
                     db.AnimalShots.Remove(item);
                 }
+
                 db.SaveChanges();
-                Console.WriteLine("Shots removed");
             }
             catch (Exception e)
             {
@@ -321,6 +336,7 @@ namespace HumaneSociety
                 {
                     db.Adoptions.Remove(item);
                 }
+
                 db.SaveChanges();
             }
             catch (Exception e)
@@ -349,7 +365,6 @@ namespace HumaneSociety
         // TODO: Animal Multi-Trait Search
         internal static IQueryable<Animals> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
        {
-           
            //get Whole db of Animals
            IQueryable<Animals> foundAnimals = db.Animals;
 
@@ -359,38 +374,32 @@ namespace HumaneSociety
                         var categoryId = GetCategoryId(updates[1]);
                         foundAnimals = foundAnimals.Where((x) => x.CategoryId == categoryId);
                     break;
-
                     case 2:
                         foundAnimals = foundAnimals.Where(x => x.Name == updates[2]);
-                    break;
-                    
+                    break; 
                     case 3:
                         foundAnimals = foundAnimals.Where(x => x.Age == Int32.Parse(updates[3]));
                     break;
-
                     case 4:
                         foundAnimals = foundAnimals.Where(x => x.Demeanor == updates[4]);
-                    break;
-                    
+                    break;         
                     case 5:
                         foundAnimals = foundAnimals.Where(x => x.KidFriendly == stringToBool(updates[5]));
                     break;
-
                     case 6:
                         foundAnimals = foundAnimals.Where(x => x.PetFriendly == stringToBool(updates[6]));
                     break;
                     case 7:
                         foundAnimals = foundAnimals.Where(x => x.Weight == Int32.Parse(updates[7]));
                     break;
-
                     case 8:
                         foundAnimals = foundAnimals.Where(x => x.AnimalId == Int32.Parse(updates[8]));
                     break;
                 }
             }
+
             return foundAnimals;
        }
-
          
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
@@ -415,11 +424,13 @@ namespace HumaneSociety
         internal static void Adopt(Animals animal, Clients client)
         {
             var newAdoption = new Adoptions();
+
             newAdoption.ApprovalStatus = "In Progress";
             newAdoption.PaymentCollected = true;
             newAdoption.ClientId = client.ClientId;
             newAdoption.AnimalId = animal.AnimalId;
             newAdoption.AdoptionFee = 50;
+
             db.Adoptions.Add(newAdoption);
             db.SaveChanges();
         }
@@ -467,9 +478,11 @@ namespace HumaneSociety
         {
             var foundShot = db.Shots.Where(x => x.Name == shotName).FirstOrDefault();
             var newAnimalShot = new AnimalShots();
+
             newAnimalShot.AnimalId = animal.AnimalId;
             newAnimalShot.ShotId = foundShot.ShotId;
             newAnimalShot.DateReceived = DateTime.Now;
+            
             db.AnimalShots.Add(newAnimalShot);
             db.SaveChanges();
         }
