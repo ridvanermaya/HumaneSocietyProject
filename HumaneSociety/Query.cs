@@ -271,32 +271,43 @@ namespace HumaneSociety
             try
             {
                 queryRoom.AnimalId = null;
+                db.SaveChanges();
+                Console.WriteLine("Associated Room's AnimalID set to null");
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
 
-            var queryShot = db.AnimalShots.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
+            var queryShot = db.AnimalShots.Where(a => a.AnimalId == animal.AnimalId).Select(a => a);
 
             try
             {
-                db.AnimalShots.Remove(queryShot);
+                foreach (var item in queryShot)
+                {
+                    db.AnimalShots.Remove(item);
+                }
+                db.SaveChanges();
+                Console.WriteLine("Shots removed");
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
 
-            var queryAnimal = db.Animals.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
+            var queryAnimal = db.Animals.Where(a => a.AnimalId == animal.AnimalId).Select(a => a);
 
             if (queryAnimal != null)
             {
-                db.Animals.Remove(queryAnimal);
+                foreach (var item in queryAnimal)
+                {
+                    db.Animals.Remove(item);
+                }
             }
             try
             {
                 db.SaveChanges();
+                Console.WriteLine("Animal is removed from the database");
             }
             catch (Exception e)
             {
@@ -387,7 +398,14 @@ namespace HumaneSociety
         // TODO: Adoption CRUD Operations
         internal static void Adopt(Animals animal, Clients client)
         {
-            throw new NotImplementedException();
+            var newAdoption = new Adoptions();
+            newAdoption.ApprovalStatus = "In Progress";
+            newAdoption.PaymentCollected = true;
+            newAdoption.ClientId = client.ClientId;
+            newAdoption.AnimalId = animal.AnimalId;
+            newAdoption.AdoptionFee = 50;
+            db.Adoptions.Add(newAdoption);
+            db.SaveChanges();
         }
 
         internal static IQueryable<Adoptions> GetPendingAdoptions()

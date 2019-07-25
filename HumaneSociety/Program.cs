@@ -12,12 +12,11 @@ namespace HumaneSociety
         static void Main(string[] args)
         {
             Animals animal = new Animals();
-            animal.AnimalId = 1;
-            var Shots = Query.GetPendingAdoptions();
-            foreach (var item in Shots)
-            {
-                Console.WriteLine(item.AnimalId);
-            }
+            animal.AnimalId = 6;
+            Clients c = new Clients();
+            c.ClientId = 1;
+            Query.Adopt(animal, c);
+            
             var db = new HumaneSocietyDb();
             
         }
