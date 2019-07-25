@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -252,12 +254,18 @@ namespace HumaneSociety
             return foundAnimal;
         }
 
-        internal static bool stringToBool(string x){
+        internal static bool? StringToBool(string x){
+            if(x == "null"){
+                return null;
+            }
+            if(x == "1"){
+                return true;
+            }
             if(x.ToLower()=="true" || x.ToLower()=="yes"){
                 return true;
-            } else{
-                return false;
-            }
+            } 
+
+            return false;
         }
 
         internal static void UpdateAnimal(int animalId, Dictionary<int, string> updates)
@@ -282,10 +290,10 @@ namespace HumaneSociety
                         query.Demeanor = updates[4];
                         break;
                     case 5:
-                        query.KidFriendly = stringToBool(updates[5]);
+                        query.KidFriendly = StringToBool(updates[5]);
                         break;
                     case 6:
-                        query.PetFriendly = stringToBool(updates[6]);
+                        query.PetFriendly = StringToBool(updates[6]);
                         break;
                     case 7:
                         query.Weight = Int32.Parse(updates[7]);
@@ -302,17 +310,20 @@ namespace HumaneSociety
         internal static void RemoveAnimal(Animals animal)
         {
             var queryRoom = db.Rooms.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
-            try
-            {
-                if(queryRoom != null) {
-                    queryRoom.AnimalId = null;
-                    db.SaveChanges();
+            if (queryRoom != null) {
+                try
+                {
+                    if(queryRoom != null) {
+                        queryRoom.AnimalId = null;
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
                 }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
+            
 
             var queryShot = db.AnimalShots.Where(a => a.AnimalId == animal.AnimalId).Select(a => a);
             try
@@ -384,10 +395,10 @@ namespace HumaneSociety
                         foundAnimals = foundAnimals.Where(x => x.Demeanor == updates[4]);
                     break;         
                     case 5:
-                        foundAnimals = foundAnimals.Where(x => x.KidFriendly == stringToBool(updates[5]));
+                        foundAnimals = foundAnimals.Where(x => x.KidFriendly == StringToBool(updates[5]));
                     break;
                     case 6:
-                        foundAnimals = foundAnimals.Where(x => x.PetFriendly == stringToBool(updates[6]));
+                        foundAnimals = foundAnimals.Where(x => x.PetFriendly == StringToBool(updates[6]));
                     break;
                     case 7:
                         foundAnimals = foundAnimals.Where(x => x.Weight == Int32.Parse(updates[7]));
@@ -412,6 +423,12 @@ namespace HumaneSociety
         {
             var foundRoom = db.Rooms.Where(r => r.AnimalId == animalId).FirstOrDefault();
             return foundRoom;
+        }
+
+        internal static void UpdateRoom(int animalId, int roomNumber) {
+            var query = db.Rooms.Where(x => x.RoomNumber == roomNumber).FirstOrDefault();
+            query.AnimalId = animalId;
+            db.SaveChanges();
         }
         
         internal static int GetDietPlanId(string dietPlanName)
@@ -485,6 +502,86 @@ namespace HumaneSociety
             
             db.AnimalShots.Add(newAnimalShot);
             db.SaveChanges();
+        }
+
+        // Bonus User Story
+        internal static dynamic GetCsvData(string filePath)
+        {
+           string[] allLines = File.ReadAllLines(filePath);
+           var query = from line in allLines
+                       let data = line.Split(',')
+                       select new
+                       {
+                           Name = data[0],
+                           Age = data[1],
+                           Weight = data[2],
+                           Demeanor = data[3],
+                           KidFriendly = data[4],
+                           PetFriendly = data[5],
+                           Gender = data[6],
+                           AdoptionStatus = data[7],
+                           CategoryId = data[8],
+                           DietPlanId = data[9],
+                           EmployeeId = data[10]
+                       };
+
+           return query;
+        }
+
+        internal static string RemoveAllChars(string s, string c)
+        {
+           int found = s.IndexOf(c);
+           while(found != -1){
+               s = s.Remove(found, 1);
+               found = s.IndexOf(c);
+           }
+
+           return s;
+        }
+
+        internal static int? ToNullableInt(string s){
+            if(s == "null") {
+                return null;
+            }
+            try {
+                return Int32.Parse(s);
+            } 
+                catch(Exception E){
+                return null;
+            }
+        }
+
+        internal static void AddAnimalsFromCsv(string filePath)
+        {
+            var csv = GetCsvData(filePath);
+
+            foreach (var item in csv)
+            {
+                string name = RemoveAllChars(item.Name, " ");
+                name = RemoveAllChars(name, "\"");
+                string demeanor = RemoveAllChars(item.Demeanor, " ");
+                demeanor = RemoveAllChars(demeanor, "\"");
+                string gender = RemoveAllChars(item.Gender, " ");
+                gender = RemoveAllChars(gender, "\"");
+                string adoptionStatus = RemoveAllChars(item.AdoptionStatus, " ");
+                adoptionStatus = RemoveAllChars(adoptionStatus, "\"");
+                Animals newAnimal = new Animals();
+
+                newAnimal.Name = name;
+                newAnimal.Weight = Int32.Parse(item.Weight);
+                newAnimal.Age = Int32.Parse(item.Age);
+                newAnimal.Demeanor = demeanor;
+                newAnimal.KidFriendly = StringToBool(item.KidFriendly);
+                newAnimal.PetFriendly = StringToBool(item.PetFriendly);
+                newAnimal.Gender = gender;
+                newAnimal.AdoptionStatus = adoptionStatus;
+                newAnimal.CategoryId = ToNullableInt(item.CategoryId);
+                newAnimal.DietPlanId = ToNullableInt(item.DietPlanId);
+                newAnimal.EmployeeId = ToNullableInt(item.EmployeeId);
+
+                db.Animals.Add(newAnimal);
+                db.SaveChanges();
+            }
         }
     }
 }

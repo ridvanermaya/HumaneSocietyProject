@@ -31,6 +31,7 @@ namespace HumaneSociety
             string input = UserInterface.GetUserInput();
             RunInput(input);
         }
+
         protected void RunInput(string input)
         {
             if(input == "1" || input.ToLower() == "create")
@@ -134,6 +135,5 @@ namespace HumaneSociety
                 return;
             }
         }
-
     }
 }
