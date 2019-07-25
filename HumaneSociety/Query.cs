@@ -392,7 +392,8 @@ namespace HumaneSociety
 
         internal static IQueryable<Adoptions> GetPendingAdoptions()
         {
-            throw new NotImplementedException();
+            var query = db.Adoptions.Where(a => a.ApprovalStatus == "In Progress").Select(a => a);
+            return query;
         }
 
         internal static void UpdateAdoption(bool isAdopted, Adoptions adoption)
@@ -408,7 +409,8 @@ namespace HumaneSociety
         // TODO: Shots Stuff
         internal static IQueryable<AnimalShots> GetShots(Animals animal)
         {
-            throw new NotImplementedException();
+            var query = db.AnimalShots.Where(a => a.AnimalId == animal.AnimalId).Select(a => a);
+            return query;
         }
 
         internal static void UpdateShot(string shotName, Animals animal)

@@ -13,7 +13,11 @@ namespace HumaneSociety
         {
             Animals animal = new Animals();
             animal.AnimalId = 1;
-            Query.RemoveAnimal(animal);
+            var Shots = Query.GetPendingAdoptions();
+            foreach (var item in Shots)
+            {
+                Console.WriteLine(item.AnimalId);
+            }
             var db = new HumaneSocietyDb();
             
         }
