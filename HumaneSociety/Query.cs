@@ -288,9 +288,11 @@ namespace HumaneSociety
             var queryRoom = db.Rooms.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
             try
             {
-                queryRoom.AnimalId = null;
-                db.SaveChanges();
-                Console.WriteLine("Associated Room's AnimalID set to null");
+                if(queryRoom != null) {
+                    queryRoom.AnimalId = null;
+                    db.SaveChanges();
+                }
+                
             }
             catch (Exception e)
             {
@@ -298,7 +300,6 @@ namespace HumaneSociety
             }
 
             var queryShot = db.AnimalShots.Where(a => a.AnimalId == animal.AnimalId).Select(a => a);
-
             try
             {
                 foreach (var item in queryShot)
@@ -313,8 +314,21 @@ namespace HumaneSociety
                 Console.WriteLine(e);
             }
 
-            var queryAnimal = db.Animals.Where(a => a.AnimalId == animal.AnimalId).Select(a => a);
+            var queryAdoptions = db.Adoptions.Where(a => a.AnimalId == animal.AnimalId).Select(a => a);
+            try
+            {
+                foreach (var item in queryAdoptions)
+                {
+                    db.Adoptions.Remove(item);
+                }
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
 
+            var queryAnimal = db.Animals.Where(a => a.AnimalId == animal.AnimalId).Select(a => a);
             if (queryAnimal != null)
             {
                 foreach (var item in queryAnimal)
@@ -325,7 +339,6 @@ namespace HumaneSociety
             try
             {
                 db.SaveChanges();
-                Console.WriteLine("Animal is removed from the database");
             }
             catch (Exception e)
             {
@@ -375,13 +388,7 @@ namespace HumaneSociety
                     break;
                 }
             }
-
-          
-        //    if (foundAnimals == null)
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-           return foundAnimals;
+            return foundAnimals;
        }
 
          

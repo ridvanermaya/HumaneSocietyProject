@@ -11,8 +11,9 @@ namespace HumaneSociety
     {
         static void Main(string[] args)
         {
-            // Animals animal = new Animals();
-            // animal.AnimalId = 6;
+            Animals animal = new Animals();
+            animal.AnimalId = 1;
+            Query.RemoveAnimal(animal);
             // Clients c = new Clients();
             // c.ClientId = 1;
             // Adoptions a = new Adoptions();
