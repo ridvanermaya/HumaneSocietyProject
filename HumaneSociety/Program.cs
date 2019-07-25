@@ -12,7 +12,7 @@ namespace HumaneSociety
         static void Main(string[] args)
         {
             Animals animal = new Animals();
-            animal.AnimalId = 3;
+            animal.AnimalId = 1;
             Query.RemoveAnimal(animal);
             var db = new HumaneSocietyDb();
             

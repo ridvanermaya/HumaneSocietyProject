@@ -267,32 +267,32 @@ namespace HumaneSociety
 
         internal static void RemoveAnimal(Animals animal)
         {
-            var queryR = db.Rooms.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
-            var queryS = db.AnimalShots.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
+            var queryRoom = db.Rooms.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
             try
             {
-                db.AnimalShots.Remove(queryS);
+                queryRoom.AnimalId = null;
             }
-            catch (System.Exception)
+            catch (Exception e)
             {
-
+                Console.WriteLine(e);
             }
-            db.SaveChanges();
+
+            var queryShot = db.AnimalShots.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
+
             try
             {
-                queryR.AnimalId = null;
+                db.AnimalShots.Remove(queryShot);
             }
-            catch (System.Exception)
+            catch (Exception e)
             {
-
+                Console.WriteLine(e);
             }
-            db.SaveChanges();
 
-            var query = db.Animals.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
+            var queryAnimal = db.Animals.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
 
-            if (query != null)
+            if (queryAnimal != null)
             {
-                db.Animals.Remove(query);
+                db.Animals.Remove(queryAnimal);
             }
             try
             {
