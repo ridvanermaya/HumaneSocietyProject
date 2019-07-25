@@ -217,7 +217,7 @@ namespace HumaneSociety
         }
 
         internal static bool stringToBool(string x){
-                if(x=="true"){
+                if(x.ToLower()=="true" || x.ToLower()=="yes"){
                     return true;
                 } else{
                     return false;
@@ -229,11 +229,6 @@ namespace HumaneSociety
             var query = (from animal in db.Animals
                         where animal.AnimalId == animalId
                         select animal).FirstOrDefault();
-
-            Console.WriteLine(query);
-            //Console.WriteLine(query.Category.Name);
-
-            
 
             foreach (var update in updates)
             {
@@ -320,56 +315,47 @@ namespace HumaneSociety
         // TODO: Animal Multi-Trait Search
         internal static IQueryable<Animals> SearchForAnimalsByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
        {
-           string category = updates[1];
-           string name = updates[2];
+           
            //get Whole db of Animals
            IQueryable<Animals> foundAnimals = db.Animals;
-           int? age;
-           try {
-               age = Int32.Parse(updates[3]);
-           } catch (Exception E)
-           {
-               age = null;
-           }
-           string demeanor = updates[4];
-           int? weight; 
-           try
-           {
-               weight = Int32.Parse(updates[7]);
-           }
-           catch (System.Exception)
-           {
-               weight =  null;
-           }
-           
-           int? ID;
-           try
-           {
-               ID = Int32.Parse(updates[8]);
-           } catch (Exception E)
-           {
-               ID = null;
-           }
-           if (!string.IsNullOrEmpty(category))
-           {
-               //get All the animals of tnis category
-               foundAnimals = foundAnimals.Where((x) => x.Category.Name == category);
-           }
-           if (!string.IsNullOrEmpty(name))
-           {
-               foundAnimals = foundAnimals.Where((x) => x.Name == name);
-           }
-           if (age != null)
-           {
-           }
-           if (!string.IsNullOrEmpty(demeanor))
-           {
-           }
-           if (ID != null)
-           {
-               foundAnimals = null;
-               foundAnimals.AsEnumerable().Concat(new[] { GetAnimalByID((int)ID) });
+
+            foreach(var update in updates){
+                switch(update.Key){
+                    case 1:
+                        var categoryId = GetCategoryId(updates[1]);
+                        foundAnimals = foundAnimals.Where((x) => x.CategoryId == categoryId);
+                    break;
+
+                    case 2:
+                        foundAnimals = foundAnimals.Where(x => x.Name == updates[2]);
+                    break;
+                    
+                    case 3:
+                        foundAnimals = foundAnimals.Where(x => x.Age == Int32.Parse(updates[3]));
+                    break;
+
+                    case 4:
+                        foundAnimals = foundAnimals.Where(x => x.Demeanor == updates[4]);
+                    break;
+                    
+                    case 5:
+                        foundAnimals = foundAnimals.Where(x => x.KidFriendly == stringToBool(updates[5]));
+                    break;
+
+                    case 6:
+                        foundAnimals = foundAnimals.Where(x => x.PetFriendly == stringToBool(updates[6]));
+                    break;
+                    case 7:
+                        foundAnimals = foundAnimals.Where(x => x.Weight == Int32.Parse(updates[7]));
+                    break;
+
+                    case 8:
+                        foundAnimals = foundAnimals.Where(x => x.AnimalId == Int32.Parse(updates[8]));
+                    break;
+                }
             }
+
+          
         //    if (foundAnimals == null)
         //    {
         //        throw new NotImplementedException();

@@ -19,9 +19,12 @@ namespace HumaneSociety
             // a.ClientId = 1;
             // a.AnimalId = 6;
             // Query.UpdateAdoption(true, a);
-            Query.UpdateShot("DA2P", animal);
-            
-            var db = new HumaneSocietyDb();
+            //Query.UpdateShot("DA2P", animal);
+            var query = Query.SearchForAnimalsByMultipleTraits(new Dictionary<int, string>(){[8] = "2"});
+            foreach(var q in query){
+                Console.WriteLine(q.Name);
+            }
+            //var db = new HumaneSocietyDb();
             
         }
     }
