@@ -12,16 +12,7 @@ namespace HumaneSociety
         static void Main(string[] args)
         {
             var db = new HumaneSocietyDb();
-            // Query.AddAnimalsFromCsv("../animals.csv");
-            
-            
-            // var csv = Query.GetCsvData("../animals.csv");
-            // foreach (var item in csv)
-            // {
-            //     string noQuotes= Query.RemoveAllChars(item.Name, "\"");
-            //     Console.WriteLine(Query.RemoveAllChars(noQuotes, " "));
-            // }
-            // PointOfEntry.Run();
+            PointOfEntry.Run();
         }
     }
 }
